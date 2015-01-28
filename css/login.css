@@ -40,3 +40,8 @@ legend {
 span {
     color: #666666;
 }
+
+#login_status {
+    text-align: center;
+    color: red;
+}

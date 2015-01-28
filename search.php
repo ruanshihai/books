@@ -15,7 +15,6 @@
 </head>
 
 <body>
-
 <div>
 	<div class="content">
 		<?php include('nav.html') ?>
@@ -80,6 +79,5 @@ eof;
 	</div>
 	
 </div>
-
 </body>
 </html>
