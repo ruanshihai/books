@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <?php
+	include('books.php');
 	session_start();
 
 	//检测是否登录，若没登录则转向登录界面
@@ -41,8 +42,8 @@
 								$values = $values . ", ";
 							if ($where)
 								$where = $where . " AND ";
-							$values = $values . $attr[$x] . "=" . '"' . $_POST[$attr[$x]] . '"';
-							$where = $where . $attr[$x] . "=" . '"' . $_POST[$attr[$x]] . '"';
+							$values = $values . $attr[$x] . "=" . '"' . in($_POST[$attr[$x]], true) . '"';
+							$where = $where . $attr[$x] . "=" . '"' . in($_POST[$attr[$x]], true) . '"';
 						}
 					}
 
@@ -76,9 +77,7 @@
 				?>
 			</div>
 		</div>
-	</div>
-	
+	</div>	
 </div>
-
 </body>
 </html>

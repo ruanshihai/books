@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <?php
+	include('books.php');
 	session_start();
 
 	//检测是否登录，若没登录则转向登录界面
@@ -13,7 +14,6 @@
 <title>Books管理后台</title>
 <link rel="stylesheet" href="css/main.css" />
 </head>
-
 <body>
 <div>
 	<div class="content">
@@ -40,7 +40,7 @@
 							if ($_POST[$attr[$x]]) {
 								if ($values)
 									$values = $values . " AND ";
-								$values = $values . $attr[$x] . "=" . '"' . $_POST[$attr[$x]] . '"';
+								$values = $values . $attr[$x] . "=" . '"' . in($_POST[$attr[$x]], true) . '"';
 								$url = $url . "&" . $attr[$x] . "=" . $_POST[$attr[$x]];
 							}
 						}
@@ -79,7 +79,7 @@ eof;
 								if ($_GET[$attr[$x]]) {
 									if ($values)
 										$values = $values . " AND ";
-									$values = $values . $attr[$x] . "=" . '"' . $_GET[$attr[$x]] . '"';
+									$values = $values . $attr[$x] . "=" . '"' . in($_GET[$attr[$x]], true) . '"';
 									$url = $url . "&" . $attr[$x] . "=" . $_GET[$attr[$x]];
 								}
 							}
@@ -113,7 +113,6 @@ eof;
 			</div>
 		</div>
 	</div>
-	
 </div>
 </body>
 </html>

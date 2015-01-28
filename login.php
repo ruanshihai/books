@@ -1,4 +1,5 @@
 <?php
+    include('books.php');
     session_start();
 
     //注销登录
@@ -13,9 +14,9 @@
         exit('非法访问!');
     }
 
-    $username = htmlspecialchars($_POST['username']);
+    $username = in($_POST['username'], true);
     //$password = MD5($_POST['password']);
-    $password = $_POST['password'];
+    $password = in($_POST['password'], true);
 
     //包含数据库连接文件
     include('mysql/conn.php');

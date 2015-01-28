@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <?php
+	include('books.php');
 	session_start();
 
 	//检测是否登录，若没登录则转向登录界面
@@ -24,8 +25,8 @@
 				if ($_POST['submit']) {
 					include("mysql/conn.php");
 
-					$username = $_POST['username'];
-					$password = $_POST['password'];
+					$username = in($_POST['username'], true);
+					$password = in($_POST['password'], true);
 					mysql_query("INSERT INTO managers VALUES('$username', '$password')");
 
 					echo "注册成功，<a href='register.php'>点击返回</a>";

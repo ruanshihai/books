@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <?php
+	include('books.php');
 	session_start();
 
 	//检测是否登录，若没登录则转向登录界面
@@ -30,7 +31,7 @@
 					$result = mysql_query("SELECT DISTINCT Subject FROM book_info");
 					$sum_classified = 0;
 					while ($row = mysql_fetch_array($result)) {
-						$subject = $row['Subject'];
+						$subject = in($row['Subject'], true);
 						if (!$subject)
 							continue;
 						$res = mysql_query("SELECT COUNT(*) FROM book_info WHERE Subject='" . $subject . "'");
