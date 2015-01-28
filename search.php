@@ -35,43 +35,79 @@
 			<div>
 				<?php
 					$attr = array("BookID", "Name", "Author", "Pubdate", "Subject", "Publisher", "Price", "AddOn");
-					for ($x=0; $x<count($attr); $x++) {
-						if ($_POST[$attr[$x]]) {
-							if ($values)
-								$values = $values . " AND ";
-							$values = $values . $attr[$x] . "=" . '"' . $_POST[$attr[$x]] . '"';
+					if ($_SERVER['REQUEST_METHOD'] == "POST") {
+						for ($x=0; $x<count($attr); $x++) {
+							if ($_POST[$attr[$x]]) {
+								if ($values)
+									$values = $values . " AND ";
+								$values = $values . $attr[$x] . "=" . '"' . $_POST[$attr[$x]] . '"';
+								$url = $url . "&" . $attr[$x] . "=" . $_POST[$attr[$x]];
+							}
 						}
+
+						$recordscount = 0;
+						if ($values) {
+							include("mysql/conn.php");
+							$result = mysql_query("SELECT COUNT(*) FROM book_info WHERE $values");
+							$recordscount = mysql_fetch_array($result)[0];
+							mysql_close($conn);
+						}
+						header("Location:search.php?pageid=1&recordscount=$recordscount$url");
+						exit();
 					}
 
-					if ($values) {
-						include("mysql/conn.php");
-
-						echo <<< eof
-						<table>
-							<tr>
-								<th>BookID</th>
-								<th>Name</th>
-								<th>Author</th>
-								<th>Published Date</th>
-								<th>Subject</th>
-								<th>Publisher</th>
-								<th>Price</th>
-								<th>AddOn</th>
-							</tr>
+					if (isset($_GET['pageid'])) {
+						$recordscount = $_GET['recordscount'];
+						if ($recordscount > 0) {
+							echo <<< eof
+							<table>
+								<tr>
+									<th>BookID</th>
+									<th>Name</th>
+									<th>Author</th>
+									<th>Published Date</th>
+									<th>Subject</th>
+									<th>Publisher</th>
+									<th>Price</th>
+									<th>AddOn</th>
+								</tr>
 eof;
 
-						$result = mysql_query("SELECT * FROM book_info WHERE " . $values);
-						while ($row = mysql_fetch_array($result)) {
-							echo "<tr>";
-							for ($x=0; $x<count($attr); $x++)
-								echo "<td>" . htmlspecialchars($row[$attr[$x]]) . "</td>";
-							echo "<td><a href=" . "alter.php?BookID=" . $row['BookID'] . ">" . "修改" . "</a></td>";
-							echo "</tr>";
-						}
-						echo "</table>";
-						echo "共" . mysql_num_rows($result)  . "条结果";
+							$pageid = $_GET['pageid'];
+							$pagescount = ($recordscount+9)/10;
+							for ($x=0; $x<count($attr); $x++) {
+								if ($_GET[$attr[$x]]) {
+									if ($values)
+										$values = $values . " AND ";
+									$values = $values . $attr[$x] . "=" . '"' . $_GET[$attr[$x]] . '"';
+									$url = $url . "&" . $attr[$x] . "=" . $_GET[$attr[$x]];
+								}
+							}
 
-						mysql_close($con);
+							include("mysql/conn.php");
+
+							$result = mysql_query("SELECT * FROM book_info WHERE $values LIMIT " . (($pageid-1)*10) . ", 10");
+							while ($row = mysql_fetch_array($result)) {
+								echo "<tr>";
+								for ($x=0; $x<count($attr); $x++)
+									echo "<td>" . htmlspecialchars($row[$attr[$x]]) . "</td>";
+								echo "<td><a href=" . "alter.php?BookID=" . $row['BookID'] . ">" . "修改" . "</a></td>";
+								echo "</tr>";
+							}
+							echo "</table>";
+							
+							if ($pageid > 1) {
+								$pageupid = $pageid-1;
+								echo '<a href="search.php?pageid=' . $pageupid . '&recordscount=' . $recordscount . $url . '"' . 'style="margin:0 10px"> 上一页 <a/>';
+							}
+							if ($pageid < $pagescount) {
+								$pagedownid = $pageid+1;
+								echo '<a href="search.php?pageid=' . $pagedownid . '&recordscount=' . $recordscount . $url . '"' . 'style="margin:0 10px"> 下一页 <a/>';
+							}
+							echo "<span style='float: right; margin-right: 128px'>共" . $recordscount  . "条结果</span>";
+
+							mysql_close($con);
+						}
 					}
 				?>
 			</div>

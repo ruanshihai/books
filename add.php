@@ -35,12 +35,14 @@
 			<div>
 				<?php
 					$attr = array("BookID", "Name", "Author", "Pubdate", "Subject", "Publisher", "Price", "AddOn");
-					$values = "";
 					for ($x=0; $x<count($attr); $x++) {
 						if ($_POST[$attr[$x]]) {
 							if ($values)
 								$values = $values . ", ";
+							if ($where)
+								$where = $where . " AND ";
 							$values = $values . $attr[$x] . "=" . '"' . $_POST[$attr[$x]] . '"';
+							$where = $where . $attr[$x] . "=" . '"' . $_POST[$attr[$x]] . '"';
 						}
 					}
 
@@ -61,8 +63,11 @@
 						echo "<th>AddOn</th>";
 						echo "</tr>";
 						echo "<tr>";
+
+						$result = mysql_query("SELECT * FROM book_info WHERE $where ORDER BY BookID DESC LIMIT 1");
+						$row = mysql_fetch_array($result);
 						for ($x=0; $x<count($attr); $x++)
-							echo "<td>" . htmlspecialchars($_POST[$attr[$x]]) . "</td>";
+							echo "<td>" . htmlspecialchars($row[$attr[$x]]) . "</td>";
 						echo "</tr>";
 						echo "</table>";
 
