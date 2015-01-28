@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+ <head> 
+  <title>管理员登录</title> 
+  <meta charset="utf-8" /> 
+  <link rel="stylesheet" type="text/css" href="css/login.css" /> 
+  <script type="text/javascript" src="js/login.js"></script> 
+ </head> 
+ <body> 
+  <div class="header">
+   <h1>Welcome to books manage system!</h1>
+  </div>
+  <div> 
+   <fieldset class="container"> 
+    <legend>用户登录</legend> 
+    <form name="LoginForm" method="post" action="login.php" onsubmit="return InputCheck(this)"> 
+     <p> 
+      <label for="username" class="label">用户名:</label> 
+      <input id="username" name="username" type="text" class="input" /> 
+     </p> 
+     <p> </p> 
+     <p> 
+      <label for="password" class="label">密 码:</label> 
+      <input id="password" name="password" type="password" class="input" /> 
+     </p> 
+     <p> </p> 
+     <p class="center"> 
+      <input type="submit" name="submit" value="  确 定  " /> 
+     </p> 
+    </form> 
+   </fieldset> 
+  </div>  
+ </body>
+</html>
