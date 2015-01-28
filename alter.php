@@ -30,7 +30,7 @@
 					}
 				?>
 				<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-					Old BookID: <input type="text" name="OldBookID" value="<?php echo $row['BookID'] ?>" /> <br /><br />
+					<p style="display:none">Old BookID: <input type="text" name="OldBookID" value="<?php echo $row['BookID'] ?>" /> </p>
 					BookID: <input type="text" name="BookID" value="<?php echo $row['BookID'] ?>" /> <br />
 					Name: <input type="text" name="Name" value="<?php echo $row['Name'] ?>" /> <br />
 					Author: <input type="text" name="Author" value="<?php echo $row['Author'] ?>" /> <br />
