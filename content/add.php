@@ -1,13 +1,7 @@
 <!DOCTYPE html>
 <?php
-	include('books.php');
-	session_start();
-
-	//检测是否登录，若没登录则转向登录界面
-	if(!isset($_SESSION['username'])){
-	    header("Location:login.html");
-	    exit();
-}
+	require_once('common/global.php');
+	login_handle();
 ?>
 <html>
 <head>
@@ -80,4 +74,5 @@
 	</div>	
 </div>
 </body>
+<script type="text/javascript" src="../js/add.js"></script>
 </html>

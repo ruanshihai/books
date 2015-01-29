@@ -3,7 +3,7 @@
  <head> 
   <title>管理员登录</title> 
   <meta charset="utf-8" /> 
-  <link rel="stylesheet" type="text/css" href="css/login.css" /> 
+  <link rel="stylesheet" type="text/css" href="../css/login.css" /> 
  </head> 
  <body> 
   <div class="header">
@@ -12,7 +12,7 @@
   <div> 
    <fieldset class="container"> 
     <legend>用户登录</legend> 
-    <form name="LoginForm" method="post" action="login.php" onsubmit="return InputCheck(this)"> 
+    <form name="LoginForm" method="post" action="login.php" onsubmit="return LoginInputCheck(this)"> 
      <p> 
       <label for="username" class="label">用户名:</label> 
       <input id="username" name="username" type="text" class="input" /> 
@@ -30,5 +30,6 @@
    </fieldset> 
   </div>  
  </body>
- <script type="text/javascript" src="js/login.js"></script> 
+ <script type="text/javascript" src="../js/common.js"></script>
+ <script type="text/javascript" src="../js/login.js"></script> 
 </html>
