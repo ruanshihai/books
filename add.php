@@ -37,7 +37,7 @@
 				<?php
 					$attr = array("BookID", "Name", "Author", "Pubdate", "Subject", "Publisher", "Price", "AddOn");
 					for ($x=0; $x<count($attr); $x++) {
-						if ($_POST[$attr[$x]]) {
+						if (isset($_POST[$attr[$x]])) {
 							if ($values)
 								$values = $values . ", ";
 							if ($where)
@@ -47,7 +47,7 @@
 						}
 					}
 
-					if ($values) {
+					if (isset($values) && $values) {
 						include("mysql/conn.php");
 						
 						mysql_query("INSERT INTO book_info SET " . $values);
