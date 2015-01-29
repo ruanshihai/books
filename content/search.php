@@ -15,7 +15,7 @@
 		<?php include('nav.html') ?>
 		<div class="right">
 			<div id="submit">
-				<form method="post" action="#" onsubmit="return SearchHandle(this)">
+				<form method="get" action="search.php">
 					BookID: <input type="text" name="BookID" /> <br />
 					Name: <input type="text" name="Name" /> <br />
 					Author: <input type="text" name="Author" /> <br />
@@ -39,6 +39,34 @@
 						<th>Price</th>
 						<th>AddOn</th>
 					</tr>
+					<?php
+						require_once("../db/db.php");
+						$attr = array("BookID", "Name", "Author", "Pubdate", "Subject", "Publisher", "Price", "AddOn");
+						$where = array();
+						for ($x=0; $x<count($attr); $x++) {
+							if (isset($_GET[$attr[$x]]) && $_GET[$attr[$x]]!='') {
+									$where[$attr[$x]] = $_GET[$attr[$x]];
+							}
+						}
+						$db = new DB();
+						$info = $db->select('book_info',$where);
+						foreach( $info as $singleData ){
+							echo 
+<<< EOF
+
+						<tr>
+							<td>$singleData[0]</td>
+							<td>$singleData[1]</td>
+							<td>$singleData[2]</td>
+							<td>$singleData[3]</td>
+							<td>$singleData[4]</td>
+							<td>$singleData[5]</td>
+							<td>$singleData[6]</td>
+							<td>$singleData[7]</td>
+						</tr>
+EOF;
+						}
+					?>
 				</table>
 			</div>
 		</div>
