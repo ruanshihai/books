@@ -65,7 +65,7 @@ function PageHandle(id) {
 function stateChanged() {
     if (xmlHttp.readyState==4 || xmlHttp.readyState=="complete") {
     	var lines = document.getElementsByClassName("dynamic");
-    	for (var i=0; i<lines.length; i++) {
+    	for (var i=lines.length-1; i>=0; i--) {
     		lines[i].parentNode.removeChild(lines[i]);
     	}
 
@@ -77,7 +77,7 @@ function stateChanged() {
         var data = info.data;
         for (var i=0; i<data.length; i++) {
         	var row = document.createElement("tr");
-        	row.setAttribute("calss", "dynamic");
+        	row.setAttribute("class", "dynamic");
         	for (var j=0; j<attr.length; j++) {
         		var item = document.createElement("td");
         		item.innerHTML = data[i][attr[j]];
