@@ -38,7 +38,7 @@ function SearchHandle(LoginForm) {
     var Publisher = LoginForm.Publisher.value;
     var Price = LoginForm.Price.value;
     var AddOn = LoginForm.AddOn.value;
-    url = "book.php?action=search";
+    var url = "book.php?action=search";
     data = "BookID="+BookID+"&Name="+Name+"&Author="+Author
     	+"&Pubdate="+Pubdate+"&Subject="+Subject+"&Publisher="+Publisher+"&Price="+Price+"&AddOn="+AddOn;
     xmlHttp.onreadystatechange = stateChanged;
@@ -56,6 +56,7 @@ function PageHandle(id) {
         alert ("Browser does not support HTTP Request");
         return false;
     }
+    var url = "book.php?action=search";
     xmlHttp.onreadystatechange = stateChanged;
     xmlHttp.open("POST", url, true);
     xmlHttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
@@ -83,9 +84,12 @@ function stateChanged() {
         		item.innerHTML = data[i][attr[j]];
         		row.appendChild(item);
         	}
-        	var bt = document.createElement("td");
-        	bt.innerHTML = "<a href='alter.html?BookID="+data[i].BookID+"'>修改</a>";
-        	row.appendChild(bt);
+        	var alterBt = document.createElement("td");
+        	alterBt.innerHTML = "<a href='alter.html?BookID="+data[i].BookID+"'>修改</a>";
+        	row.appendChild(alterBt);
+            var delBt = document.createElement("td");
+            delBt.innerHTML = "<button onclick='DeleteHandle(this)'>删除</button>";
+            row.appendChild(delBt);
         	document.getElementById("record").appendChild(row);
         }
 
@@ -111,6 +115,30 @@ function stateChanged() {
         result.innerHTML = "共"+recordscount+"条结果";
         pageContainer.appendChild(result);
         document.getElementById("info").appendChild(pageContainer);
+    }
+}
+
+var target;
+function DeleteHandle(btn) {
+    xmlHttp = GetXmlHttpObject();
+    if (xmlHttp == null) {
+        alert ("Browser does not support HTTP Request");
+        return false;
+    }
+    target = btn.parentNode.parentNode;
+    var BookID = target.childNodes[0].innerHTML;
+    var url = "book.php?action=del&BookID="+BookID;
+    xmlHttp.onreadystatechange = deleteStateChanged;
+    xmlHttp.open("GET", url, true);
+    xmlHttp.send(null);
+}
+
+function deleteStateChanged() {
+    if (xmlHttp.readyState==4 || xmlHttp.readyState=="complete") {
+        var info = eval('('+ xmlHttp.responseText +')');
+        if (info.code == 0) {
+            target.parentNode.removeChild(target);
+        }
     }
 }
 

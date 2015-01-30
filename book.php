@@ -136,5 +136,9 @@ function alter() {
 function del() {
 	global $book;
 	login_handle();
+
+	$result = $book->delete($_GET['BookID']);
+	ob_clean();
+	echo json_encode($result);
 }
 ?>
