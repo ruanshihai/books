@@ -5,10 +5,10 @@ function SubmitHandle(LoginForm) {
             alert ("Browser does not support HTTP Request");
             return false;
         }
-        var url = "../content/user.php";
+        var url = "user.php?action=register";
         var username = LoginForm.username.value;
         var password = LoginForm.password.value;
-        var postdata = "username="+username+"&password="+password+"&action=reg";
+        var postdata = "username="+username+"&password="+password;
         xmlHttp.onreadystatechange = stateChanged;
         xmlHttp.open("POST", url, true);
         xmlHttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
@@ -19,10 +19,13 @@ function SubmitHandle(LoginForm) {
 
 function stateChanged() {
     if (xmlHttp.readyState==4 || xmlHttp.readyState=="complete") {
-        var info = eval('('+ xmlHttp.responseText +')');alert(info);
-        if (info.action=="reg" && info.status=="ok") {
+        var info = eval('('+ xmlHttp.responseText +')');
+        if (info.code == 0) {
             document.getElementById("reg").style.display = "none";
+            document.getElementById("error").style.display = "none";
             document.getElementById("goback").style.display = "block";
+        } else {
+            document.getElementById("error").style.display = "block";
         }
     }
 }

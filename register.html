@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Books管理后台</title>
+<link rel="stylesheet" type="text/css" href="css/main.css" />
+<link rel="stylesheet" type="text/css" href="css/register.css" />
+</head>
+
+<body>
+<div>
+	<div class="content">
+		<div class="header">
+			<h1>Welcome!</h1>
+		</div>
+		<div class="left">
+			<ul>
+				<li>
+					<a href="info.html">概况</a>
+				</li>
+				<li>
+					<a href="add.html">添加图书</a>
+				</li>
+				<li>
+					<a href="search.html">查找图书</a>
+				</li>
+				<li>
+					<a href="register.html">添加帐户</a>
+				</li>
+				<li>
+					<a href="user.php?action=logout">注销</a>
+				</li>
+			</ul>
+		</div>
+		<div class="right">
+			<div id="reg">
+				<form method="post" onsubmit="return SubmitHandle(this)">
+					username: <input type="text" name="username" /> <br />
+					password: <input type="password" name="password" /> <br />
+					<input type="submit" name="submit" />
+				</form>
+			</div>
+			<div id="error">
+				<p>用户名或者密码不合法</p>
+			</div>
+			<div id="goback">
+				<p>注册成功，<a href='register.html'>点击返回</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+<script type="text/javascript" src="js/main.js"></script>
+<script type="text/javascript" src="js/register.js"></script>
+</html>

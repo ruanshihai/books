@@ -1,15 +1,16 @@
 <?php
-require_once("../common/db.php");
+require_once(dirname(__FILE__) . '/../common/db.php');
 
 class Book {
 	private $db;
+	private $attr = array("BookID", "Name", "Author", "Pubdate", "Subject", "Publisher", "Price", "AddOn");
 
 	public function __construct() {
-		$this->da = new DB();
+		$this->db = new DB();
 	}
 
-	public function insert($BookID='', $Name='', $Author='', $Pubdate='', $Subject='', $Publisher='', $Price='', $AddOn='') {
-		return $this->db->insert("book_info", array(
+	public function insert($BookID, $Name, $Author, $Pubdate, $Subject, $Publisher, $Price, $AddOn) {
+		$record = array(
 			'BookID' => $BookID,
 			'Name' => $Name,
 			'Author' => $Author,
@@ -18,7 +19,12 @@ class Book {
 			'Publisher' => $Publisher,
 			'Price' => $Price,
 			'AddOn' => $AddOn
-		));
+		);
+		foreach ($record as $key => $value) {
+			if ($value == "")
+				unset($record[$key]);
+		}
+		return $this->db->insert("book_info", $record);
 	}
 
 	public function delete($BookID) {
@@ -27,8 +33,8 @@ class Book {
 		));
 	}
 
-	public function search($BookID='', $Name='', $Author='', $Pubdate='', $Subject='', $Publisher='', $Price='', $AddOn='') {
-		return $this->db->search("book_info", array(
+	public function search($BookID='', $Name='', $Author='', $Pubdate='', $Subject='', $Publisher='', $Price='', $AddOn='', $from='', $count='') {
+		$where = array(
 			'BookID' => $BookID,
 			'Name' => $Name,
 			'Author' => $Author,
@@ -37,12 +43,21 @@ class Book {
 			'Publisher' => $Publisher,
 			'Price' => $Price,
 			'AddOn' => $AddOn
-		));
+		);
+		foreach ($where as $key => $value) {
+			if ($value == "")
+				unset($where[$key]);
+		}
+		$limit = array();
+		if ($from != "")
+			$limit[] = $from;
+		if ($count != "")
+			$limit[] = $count;
+		return $this->db->select("book_info", $where, $limit);
 	}
 
 	public function update($BookID='', $Name='', $Author='', $Pubdate='', $Subject='', $Publisher='', $Price='', $AddOn='') {
-		return $this->db->update("book_info", array('BookID' => $BookID), array(
-			'BookID' => $BookID,
+		$action = array(
 			'Name' => $Name,
 			'Author' => $Author,
 			'Pubdate' => $Pubdate,
@@ -50,11 +65,16 @@ class Book {
 			'Publisher' => $Publisher,
 			'Price' => $Price,
 			'AddOn' => $AddOn
-		));
+		);
+		foreach ($action as $key => $value) {
+			if ($value == "")
+				unset($action[$key]);
+		}
+		return $this->db->update("book_info", array('BookID' => $BookID), $action);
 	}
 
 	public function count($BookID='', $Name='', $Author='', $Pubdate='', $Subject='', $Publisher='', $Price='', $AddOn='') {
-		return $this->db->count("book_info", array(
+		$where = array(
 			'BookID' => $BookID,
 			'Name' => $Name,
 			'Author' => $Author,
@@ -63,7 +83,12 @@ class Book {
 			'Publisher' => $Publisher,
 			'Price' => $Price,
 			'AddOn' => $AddOn
-		));
+		);
+		foreach ($where as $key => $value) {
+			if ($value == "")
+				unset($where[$key]);
+		}
+		return $this->db->count("book_info", $where);
 	}
 };
 ?>

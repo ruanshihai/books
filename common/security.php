@@ -9,6 +9,7 @@ class Security {
 	}
 
 	function encrypt($str) {
+		return $str;
 		$cluster = "jkja~1!jnw_90eui23h@3@ew+";
 		$res = MD5($cluster . MD5($str . $cluster));
 		return $res;

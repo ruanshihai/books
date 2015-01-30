@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Books管理后台</title>
+<link rel="stylesheet" type="text/css" href="css/main.css" />
+<link rel="stylesheet" type="text/css" href="css/alter.css">
+</head>
+
+<body>
+<div>
+	<div class="content">
+		<div class="header">
+			<h1>Welcome!</h1>
+		</div>
+		<div class="left">
+			<ul>
+				<li>
+					<a href="info.html">概况</a>
+				</li>
+				<li>
+					<a href="add.html">添加图书</a>
+				</li>
+				<li>
+					<a href="search.html">查找图书</a>
+				</li>
+				<li>
+					<a href="register.html">添加帐户</a>
+				</li>
+				<li>
+					<a href="user.php?action=logout">注销</a>
+				</li>
+			</ul>
+		</div>
+		<div class="right">
+			<div>
+				<form id="form" method="post" onsubmit="return AlterHandle(this)">
+					BookID: <span id="BookID"></span> <br />
+					Name: <input type="text" name="Name" /> <br />
+					Author: <input type="text" name="Author" /> <br />
+					Published Date: <input type="text" name="Pubdate" /> <br />
+					Subject: <input type="text" name="Subject" /> <br />
+					Publisher: <input type="text" name="Publisher" /> <br />
+					Price: <input type="text" name="Price" /> <br />
+					AddOn: <input type="text" name="AddOn" /> <br />
+					<input type="submit" name="submit" /> <br />
+				</form>
+				<div id="feedback">
+				<div id="yes_alter">
+					<p>数据修改成功</p>
+					<br/>
+					<table id="data">
+						<tr>
+							<th>BookID</th>
+							<th>Name</th>
+							<th>Author</th>
+							<th>Published Date</th>
+							<th>Subject</th>
+							<th>Publisher</th>
+							<th>Price</th>
+							<th>AddOn</th>
+						</tr>
+						<tr id="record">
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+						</tr>
+					</table>
+				</div>
+				<div id="no_alter">
+					<p>数据修改失败</p>
+				</div>
+			</div>
+			</div>
+			<div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+<script type="text/javascript" src="js/main.js"></script>
+<script type="text/javascript" src="js/alter.js"></script>
+</html>

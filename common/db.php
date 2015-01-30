@@ -1,13 +1,13 @@
 <?php
-require_once('config.php');
-require_once('security.php');
+require_once(dirname(__FILE__) . '/config.php');
+require_once(dirname(__FILE__) . '/security.php');
 
 class DB {
 	private $con = false;
 	private $security;
 
 	public function __construct() {
-		this->security = new Security();
+		$this->security = new Security();
 	}
 
 	public function connect() {
@@ -16,25 +16,25 @@ class DB {
 			return array(
 				'code' => 0,
 				'msg'  => '',
-				'data' => $this->con;
+				'data' => $this->con
 			);
-		$this->con = mysql_connect($DBCONFIG['DB_HOST']+":"+$DBCONFIG['DB_POST'], $DBCONFIG['DB_USER'], $DBCONFIG['DB_PWD']);
-		if (!this->con)
+		$this->con = mysql_connect($DBCONFIG['DB_HOST'], $DBCONFIG['DB_USER'], $DBCONFIG['DB_PWD']);
+		if (!$this->con)
 			return array(
 				'code' => 1,
 				'msg'  => 'database connection error',
-				'data' => '';
+				'data' => ''
 			);
-		if (mysql_select_db($DBCONFIG['DB_NAME']), $this->con)
+		if (mysql_select_db($DBCONFIG['DB_NAME'], $this->con))
 			return array(
 				'code' => 0,
 				'msg'  => '',
-				'data' => $this->con;
+				'data' => $this->con
 			);
 		return array(
 			'code' => 2,
 			'msg'  => 'database selection error',
-			'data' => '';
+			'data' => ''
 		);
 	}
 
@@ -44,7 +44,7 @@ class DB {
 			return $result;
 		$db = $result['data'];
 
-		$sql = "SELECT * FROM " . security->sql_transform($table);
+		$sql = "SELECT * FROM " . $this->security->sql_transform($table);
 		if (count($where) != 0) {
 			$sql .= " WHERE ";
 			$is_first = true;
@@ -53,7 +53,7 @@ class DB {
 					$is_first = false;
 				else
 					$sql .= " AND ";
-				$sql = $sql . $key . '="' . security->sql_transform($value) . '"';
+				$sql = $sql . $key . '="' . $this->security->sql_transform($value) . '"';
 			}
 		}
 		
@@ -65,7 +65,7 @@ class DB {
 					$is_first = false;
 				else
 					$sql .= ", ";
-				$sql = $sql . security->sql_transform($value);
+				$sql = $sql . $this->security->sql_transform($value);
 			}
 		}
 
@@ -74,7 +74,7 @@ class DB {
 			return array(
 				'code' => 3,
 				'msg'  => "execute $sql error",
-				'data' => '';
+				'data' => ''
 			);
 		$data = array();
 		while($row = mysql_fetch_array($result)) {
@@ -83,7 +83,7 @@ class DB {
 		return array(
 			'code' => 0,
 			'msg'  => '',
-			'data' => $data;
+			'data' => $data
 		);
 	}
 
@@ -93,7 +93,7 @@ class DB {
 			return $result;
 		$db = $result['data'];
 
-		$sql = "SELECT COUNT(*) FROM " . security->sql_transform($table);
+		$sql = "SELECT COUNT(*) FROM " . $this->security->sql_transform($table);
 		if (count($where) != 0) {
 			$sql .= " WHERE ";
 			$is_first = true;
@@ -102,7 +102,7 @@ class DB {
 					$is_first = false;
 				else
 					$sql .= " AND ";
-				$sql = $sql . $key . '="' . security->sql_transform($value) . '"';
+				$sql = $sql . $key . '="' . $this->security->sql_transform($value) . '"';
 			}
 		}
 
@@ -111,13 +111,13 @@ class DB {
 			return array(
 				'code' => 3,
 				'msg'  => "execute $sql error",
-				'data' => '';
+				'data' => ''
 			);
 		$data = mysql_fetch_array($result)[0];
 		return array(
 			'code' => 0,
 			'msg'  => '',
-			'data' => $data;
+			'data' => $data
 		);
 	}
 
@@ -127,7 +127,7 @@ class DB {
 			return $result;
 		$db = $result['data'];
 
-		$sql = "INSERT INTO" . security->sql_transform($table) . " SET ";
+		$sql = "INSERT INTO " . $this->security->sql_transform($table) . " SET ";
 		if (count($attr) != 0) {
 			$is_first = true;
 			foreach ($attr as $key => $value){
@@ -135,7 +135,7 @@ class DB {
 					$is_first = false;
 				else
 					$sql .= ", ";
-				$sql = $sql . $key . '="' . security->sql_transform($value) . '"';
+				$sql = $sql . $key . '="' . $this->security->sql_transform($value) . '"';
 			}
 		}
 
@@ -144,12 +144,12 @@ class DB {
 			return array(
 				'code' => 3,
 				'msg'  => "execute $sql error",
-				'data' => '';
+				'data' => ''
 			);
 		return array(
 			'code' => 0,
 			'msg'  => '',
-			'data' => $result;
+			'data' => $result
 		);
 	}
 
@@ -159,7 +159,7 @@ class DB {
 			return $result;
 		$db = $result['data'];
 
-		$sql = "UPDATE" . security->sql_transform($table) . " SET ";
+		$sql = "UPDATE " . $this->security->sql_transform($table) . " SET ";
 		if (count($attr) != 0) {
 			$is_first = true;
 			foreach ($attr as $key => $value){
@@ -167,7 +167,7 @@ class DB {
 					$is_first = false;
 				else
 					$sql .= ", ";
-				$sql = $sql . $key . '="' . security->sql_transform($value) . '"';
+				$sql = $sql . $key . '="' . $this->security->sql_transform($value) . '"';
 			}
 		}
 
@@ -179,7 +179,7 @@ class DB {
 					$is_first = false;
 				else
 					$sql .= " AND ";
-				$sql = $sql . $key . '="' . security->sql_transform($value) . '"';
+				$sql = $sql . $key . '="' . $this->security->sql_transform($value) . '"';
 			}
 		}
 
@@ -188,12 +188,12 @@ class DB {
 			return array(
 				'code' => 3,
 				'msg'  => "execute $sql error",
-				'data' => '';
+				'data' => ''
 			);
 		return array(
 			'code' => 0,
 			'msg'  => '',
-			'data' => $result;
+			'data' => $result
 		);
 	}
 
@@ -203,7 +203,7 @@ class DB {
 			return $result;
 		$db = $result['data'];
 
-		$sql = "DELETE FROM " . security->sql_transform($table);
+		$sql = "DELETE FROM " . $this->security->sql_transform($table);
 		if (count($where) != 0) {
 			$sql .= " WHERE ";
 			$is_first = true;
@@ -212,7 +212,7 @@ class DB {
 					$is_first = false;
 				else
 					$sql .= " AND ";
-				$sql = $sql . $key . '="' . security->sql_transform($value) . '"';
+				$sql = $sql . $key . '="' . $this->security->sql_transform($value) . '"';
 			}
 		}
 
@@ -221,12 +221,12 @@ class DB {
 			return array(
 				'code' => 3,
 				'msg'  => "execute $sql error",
-				'data' => '';
+				'data' => ''
 			);
 		return array(
 			'code' => 0,
 			'msg'  => '',
-			'data' => $result;
+			'data' => $result
 		);
 	}
 };

@@ -9,6 +9,7 @@ function LoginInputCheck(LoginForm) {
         LoginForm.password.focus();
         return false;
     }
+    return true;
 }
 
 function GetXmlHttpObject() {

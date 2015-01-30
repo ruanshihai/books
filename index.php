@@ -1,5 +1,5 @@
 <?php
-	require_once('user/user.php');
+	require_once(dirname(__FILE__) . '/user/user.php');
 	$user = new User();
 	$result = $user->is_login();
 	if ($result['code'] == 0) {

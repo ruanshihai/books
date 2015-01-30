@@ -2,6 +2,11 @@
 	
 }
 
+#error {
+	display: none;
+	color: red;
+}
+
 #goback {
 	display: none;
 }
