@@ -1,6 +1,5 @@
 var pageid = 0;
 var recordscount = 0;
-var attr = ["BookID", "Name", "Author", "Pubdate", "Subject", "Publisher", "Price", "AddOn"];
 
 function LoadHandle() {
     xmlHttp = GetXmlHttpObject();
@@ -96,14 +95,14 @@ function stateChanged() {
         var pageContainer = document.createElement("div");
         pageContainer.setAttribute("class", "dynamic");
         if (pageid > 0) {
-        	var pageup = document.createElement("a");
+        	var pageup = document.createElement("button");
         	pageup.setAttribute("onclick", "PageHandle(-1)");
         	pageup.style.margin = "0 10px";
         	pageup.innerHTML = "上一页";
         	pageContainer.appendChild(pageup);
         }
         if (pageid < recordscount/10-1) {
-        	var pagedown = document.createElement("a");
+        	var pagedown = document.createElement("button");
         	pagedown.setAttribute("onclick", "PageHandle(1)");
         	pagedown.style.margin = "0 10px";
         	pagedown.innerHTML = "下一页";

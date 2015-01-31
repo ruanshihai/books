@@ -1,5 +1,3 @@
-var attr = ["BookID", "Name", "Author", "Pubdate", "Subject", "Publisher", "Price", "AddOn"];
-
 function LoginHandle() {
     xmlHttp = GetXmlHttpObject();
     if (xmlHttp == null) {
